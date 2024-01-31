@@ -1,4 +1,5 @@
 import icon from "./icon";
+import location from "./location";
 import palette from "./palette";
 import size from "./size";
 import style from "./style";
@@ -28,6 +29,10 @@ class Library {
 
   public get style() {
     return style;
+  }
+
+  public get location() {
+    return location;
   }
 }
 

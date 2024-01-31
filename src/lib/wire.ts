@@ -7,12 +7,12 @@ class Wire {
     DeviceEventEmitter.emit(e);
   };
 
-  connect = (e: string, f: (...args: any) => void) => {
+  on = (e: string, f: (...args: any) => void) => {
     this._map[e] = (this._map[e] || 0) + 1;
     DeviceEventEmitter.addListener(e, f);
   };
 
-  disconnect = (e: string) => {
+  off = (e: string) => {
     delete this._map[e];
     DeviceEventEmitter.removeAllListeners(e);
   };

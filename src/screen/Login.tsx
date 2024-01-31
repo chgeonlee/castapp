@@ -20,10 +20,10 @@ export default function LoginScreen() {
     if (resources.user.logged() == true) {
     }
 
-    lib.wire.connect(constants.event.SUCCESS_LOGIN, handleLogin);
+    lib.wire.on(constants.event.SUCCESS_LOGIN, handleLogin);
 
     return () => {
-      lib.wire.disconnect(constants.event.SUCCESS_LOGIN);
+      lib.wire.off(constants.event.SUCCESS_LOGIN);
     };
   }, []);
 

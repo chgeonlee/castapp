@@ -10,6 +10,8 @@ import lib from "./lib";
 import LoginScreen from "./screen/Login";
 import { useState } from "react";
 import PostScreen from "./screen/Post";
+import PinScreen from "./screen/Pin";
+import FindScreen from "./screen/Find";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<any>();
@@ -29,7 +31,7 @@ const TabNavigator = () => {
         options={{
           headerShown: true,
           tabBarIcon: ({ color }) => lib.icon.home(undefined, color),
-          header: () => <Header name={constants.screen.TAB_HOME} />,
+          //header: () => <Header name={constants.screen.TAB_HOME} />,
         }}
       />
       <Tab.Screen
@@ -42,7 +44,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name={constants.screen.TAB_MARK}
-        component={HomeScreen}
+        component={PinScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.mark(undefined, color),
           header: () => <Header name={constants.screen.TAB_MARK} />,
@@ -50,7 +52,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name={constants.screen.TAB_FIND}
-        component={HomeScreen}
+        component={FindScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.find(undefined, color),
           header: () => <Header name={constants.screen.TAB_FIND} />,

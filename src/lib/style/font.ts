@@ -33,23 +33,70 @@ export default class Font {
     };
   };
 
-  normal = (
+  header = (
     c: string = palette.BLACK,
-    w: fontWeightType = "400"
+    w: fontWeightType = "300"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 14,
+      fontFamily: "Railway-Bold",
+      fontSize: 16,
       fontWeight: w,
       color: c,
     };
   };
 
-  description = (
-    c: string = palette.GREY,
-    w: fontWeightType = "300"
+  title = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "400"
+  ): StyleProp<TextStyle> => {
+    return {
+      fontSize: 18,
+      fontWeight: w,
+      color: c,
+      lineHeight: 24,
+    };
+  };
+
+  subtitle = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "400"
+  ): StyleProp<TextStyle> => {
+    return {
+      fontSize: 16,
+      fontWeight: w,
+      color: c,
+    };
+  };
+
+  normal = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "400"
   ): StyleProp<TextStyle> => {
     return {
       fontSize: 13,
+      fontWeight: w,
+      color: c,
+      lineHeight: 24,
+    };
+  };
+
+  description = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "300"
+  ): StyleProp<TextStyle> => {
+    return {
+      fontSize: 11,
+      fontWeight: w,
+      color: c,
+    };
+  };
+
+  hint = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "300"
+  ): StyleProp<TextStyle> => {
+    return {
+      fontSize: 10,
       fontWeight: w,
       color: c,
     };
