@@ -33,8 +33,8 @@ export default function LoginScreen() {
         <Text style={lib.style.font.logo()}>CASTAPP</Text>
       </View>
       <View style={deco.inputContainer}>
-        <BaseInput placeholder={"사용자 아이디 혹은 이메일 주소"} />
-        <BaseInput placeholder={"비밀번호"} />
+        {/* <BaseInput placeholder={"사용자 아이디 혹은 이메일 주소"} />
+        <BaseInput placeholder={"비밀번호"} /> */}
       </View>
       <PlainButton name={"로그인 하기"} onPress={resources.user.login} />
     </View>

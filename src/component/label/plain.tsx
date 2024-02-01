@@ -17,7 +17,7 @@ export default function PlainLabel({
       <Text
         style={lib.style.font.normal(
           selected ? lib.palette.WHITE : undefined,
-          "700"
+          "500"
         )}
       >
         {name}
@@ -31,7 +31,7 @@ const deco = StyleSheet.create({
     //borderWidth: 0.5,
     paddingVertical: lib.size.gap(0),
     paddingHorizontal: lib.size.gap(3),
-    borderRadius: lib.size.gap(0),
+    borderRadius: lib.size.gap(4),
     backgroundColor: lib.palette.MIST,
   },
   selected: {

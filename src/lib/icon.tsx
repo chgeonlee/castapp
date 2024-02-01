@@ -20,6 +20,10 @@ class Icon {
     return <MaterialCommunityIcon name="post-outline" size={s} color={c} />;
   };
 
+  premium = (s: number = DEFAULT_SIZE, c: string = palette.GREY) => {
+    return <MaterialIcon name="workspace-premium" size={s} color={c} />;
+  };
+
   mark = (s: number = DEFAULT_SIZE, c: string = palette.BLACK) => {
     return <FontistoIcon name="map-marker-alt" size={s} color={c} />;
   };

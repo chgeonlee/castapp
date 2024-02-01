@@ -68,6 +68,17 @@ export default class Font {
     };
   };
 
+  default = (
+    c: string = palette.BLACK,
+    w: fontWeightType = "400"
+  ): StyleProp<TextStyle> => {
+    return {
+      fontSize: 13,
+      fontWeight: w,
+      color: c,
+    };
+  };
+
   normal = (
     c: string = palette.BLACK,
     w: fontWeightType = "400"

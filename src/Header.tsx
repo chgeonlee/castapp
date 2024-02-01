@@ -14,8 +14,11 @@ export default function Header({ name, onAdd, onBack }: HeaderProps) {
       <Text style={lib.style.font.header()}>{name}</Text>
 
       {onAdd ? (
-        <TouchableOpacity onPress={onAdd}>
-          <View style={deco.icon}>{lib.icon.plus(24)}</View>
+        <TouchableOpacity
+          onPress={onAdd}
+          style={{ justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={deco.icon}>{lib.icon.plus(28)}</View>
         </TouchableOpacity>
       ) : (
         <View style={deco.icon}></View>
@@ -29,8 +32,10 @@ const deco = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: lib.size.gap(1),
+    padding: lib.size.gap(0),
     backgroundColor: lib.palette.WHITE,
+
+    paddingHorizontal: lib.size.gap(3),
   },
 
   icon: {

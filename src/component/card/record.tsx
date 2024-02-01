@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
  */
 const CardHeader = ({ uri, id }) => {
   return (
-    <View style={[deco.row, { paddingRight: lib.size.gap(4) }]}>
+    <View style={[deco.row]}>
       <View style={deco.col1}>
         <Image source={{ uri }} style={deco.headerThumb} />
       </View>
@@ -120,11 +120,10 @@ const deco = StyleSheet.create({
   wrap: {
     backgroundColor: lib.palette.WHITE,
     gap: lib.size.gap(1),
-    paddingVertical: lib.size.gap(4),
+    padding: lib.size.gap(4),
   },
   row: {
     flexDirection: "row",
-    paddingHorizontal: lib.size.gap(2),
     gap: lib.size.gap(2),
   },
   col1: {

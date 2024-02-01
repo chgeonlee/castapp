@@ -43,7 +43,7 @@ const deco = StyleSheet.create({
     alignItems: "center",
 
     gap: lib.size.gap(1),
-    padding: lib.size.gap(2),
+    padding: lib.size.gap(4),
     backgroundColor: lib.palette.WHITE,
   },
   container: {

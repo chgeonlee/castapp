@@ -11,7 +11,7 @@ const PostImageCarousel = ({ data, wide }: any) => {
 
   const p = wide ? 0 : 58;
   const g = 6;
-  let contentWidth = Dimensions.get("window").width - p;
+  let contentWidth = Dimensions.get("window").width - 2 * p;
   let itemWidth = 0;
   let itemHeight = 0;
 
@@ -21,7 +21,7 @@ const PostImageCarousel = ({ data, wide }: any) => {
       const { width, height } = item.size;
       const ratio = height / width;
 
-      itemWidth = (width > contentWidth ? contentWidth : width) - 24;
+      itemWidth = width > contentWidth ? contentWidth : width;
       itemHeight = itemWidth * ratio;
 
       if (itemHeight > MAX_HEIGHT) {
@@ -32,8 +32,8 @@ const PostImageCarousel = ({ data, wide }: any) => {
   } else {
     //let c = data.length > 2 ? 3 : 2;
     let c = 2;
-    itemWidth = (contentWidth + p * 2) / c;
-    itemHeight = itemWidth * 1.33;
+    itemWidth = (contentWidth + p) / c;
+    itemHeight = itemWidth * 1.5;
   }
 
   const renderItem = ({ item }: any) => {

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Pressable,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -8,98 +8,112 @@ import {
   View,
 } from "react-native";
 import RecordCard from "../component/card/record";
-import EnableLocationViewComponent from "../component/EnableLocation";
-import PlainLabel from "../component/label/plain";
-import useLocation from "../hook/useLocation";
+import ThumbnailComponent, { ThumbnailType } from "../component/Thumbnail";
 import lib from "../lib";
 
-export default function PinScreen() {
-  const { availableLocation, locationData } = useLocation();
+const BoardItem = ({ name, value }) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        gap: lib.size.gap(1),
+      }}
+    >
+      <View>
+        <Text style={lib.style.font.hint(undefined, "400")}>{name}</Text>
+      </View>
+      <View>
+        <Text style={lib.style.font.subtitle(undefined, "800")}>{value}</Text>
+      </View>
+    </View>
+  );
+};
 
-  const [filter, setFilter] = useState<string>("all");
+export default function UserScreen() {
+  const [data, setData] = useState<any>();
+  //data receive
+  useEffect(() => {
+    setData(SAMPLE);
+  }, []);
 
-  if (availableLocation == false || locationData == null) {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <EnableLocationViewComponent />
-      </SafeAreaView>
-    );
+  if (data == null) {
+    return;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ backgroundColor: lib.palette.WHITE }}>
-        <View style={deco.locationContainer}>
+    <SafeAreaView style={deco.wrap}>
+      <ScrollView stickyHeaderIndices={[1]}>
+        {/* 유저 카드 영역 */}
+        <View style={deco.cardContainer}>
           <View
             style={{
               flexDirection: "row",
-              flex: 1,
+              alignItems: "center",
               gap: 12,
-              paddingBottom: 4,
             }}
           >
-            <View
-              style={{
-                width: 32,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {lib.icon.mark()}
+            <View style={{ flex: 1, gap: 12 }}>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Text style={lib.style.font.subtitle(undefined, "800")}>
+                  {data.name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  padding: 8,
+                  backgroundColor: lib.palette.MIST,
+                  borderRadius: 12,
+                }}
+              >
+                <Text style={lib.style.font.description()}>
+                  {data.introduceText}
+                </Text>
+              </View>
             </View>
+            <View>
+              <ThumbnailComponent
+                uri={data.thumbnail}
+                type={ThumbnailType.LARGE}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 24,
+              paddingHorizontal: 4,
+              gap: 12,
+            }}
+          >
+            <BoardItem name={"팔로워"} value={14} />
+            <BoardItem name={"팔로잉"} value={0} />
+            <BoardItem name={"프리미엄 구독자"} value={14} />
+            <BoardItem name={"구독중인 프리미엄"} value={0} />
+          </View>
+        </View>
+        {/* 탭 컨테이너 영역 */}
+        <View style={{ backgroundColor: "white" }}>
+          <View style={deco.tabContainer}>
+            <View style={[deco.tabItem, deco.selected]}>{lib.icon.post()}</View>
             <View
               style={{
+                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Text style={lib.style.font.normal(undefined, "500")}>
-                {locationData?.address.region} {locationData?.address.district}
-                {", "}
-                {locationData?.address.name}
-              </Text>
+              {lib.icon.premium()}
             </View>
           </View>
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          backgroundColor: "white",
-
-          padding: lib.size.gap(2),
-        }}
-      >
-        <View style={deco.filterContainer}>
-          <Pressable onPress={() => setFilter("all")}>
-            <PlainLabel name={"전체"} selected={filter == "all"} />
-          </Pressable>
-          <Pressable onPress={() => setFilter("linked")}>
-            <PlainLabel name={"연결된"} selected={filter == "linked"} />
-          </Pressable>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <PlainLabel name={"지도보기"} />
-        </View>
-      </View>
-      <ScrollView>
-        <View
-          style={{
-            // justifyContent: "center",
-            //alignItems: "center",
-            backgroundColor: lib.palette.WHITE,
-          }}
-        ></View>
-        <View style={deco.container}>
-          {SAMPLE.map((item, index) => {
-            return <RecordCard key={index} data={item} />;
-          })}
+        <View>
+          <View style={deco.container}>
+            {SAMPLE2.map((item, index) => {
+              return <RecordCard key={index} data={item} />;
+            })}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -107,25 +121,52 @@ export default function PinScreen() {
 }
 
 const deco = StyleSheet.create({
-  locationContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: lib.size.gap(2),
-    paddingRight: lib.size.gap(3),
-    justifyContent: "space-between",
-  },
-  filterContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: lib.size.gap(1),
+  wrap: {
+    flex: 1,
     backgroundColor: lib.palette.WHITE,
   },
-  container: {
-    gap: 2,
+
+  cardContainer: {
+    padding: lib.size.gap(4),
+    gap: lib.size.gap(1),
+  },
+
+  profile: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: lib.size.gap(1),
+  },
+
+  tabContainer: {
+    marginTop: 12,
+    borderBottomWidth: 0.5,
+    borderColor: lib.palette.SILVER,
+    flexDirection: "row",
+  },
+
+  tabItem: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  selected: {
+    borderBottomWidth: 2,
+    borderColor: lib.palette.BLACK,
   },
 });
 
-const SAMPLE = [
+const SAMPLE = {
+  dbid: "userdbid",
+  id: "chgeon.lee",
+  name: "충건리",
+  introduceText: "개발자 전용 공간",
+  thumbnail:
+    "https://i.pinimg.com/474x/64/62/21/6462217a6f50984ec7a1fe049fb9f26b.jpg",
+  content: {},
+};
+
+const SAMPLE2 = [
   {
     user: {
       id: "chgeon.lee",
