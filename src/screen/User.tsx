@@ -5,9 +5,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import RecordCard from "../component/card/record";
+import MapComponent from "../component/Map";
 import ThumbnailComponent, { ThumbnailType } from "../component/Thumbnail";
 import lib from "../lib";
 
@@ -31,8 +34,105 @@ const BoardItem = ({ name, value }) => {
   );
 };
 
+const UserCard = ({ data }) => {
+  return (
+    <View style={deco.cardContainer}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <View style={{ flex: 1, gap: 12 }}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              gap: lib.size.gap(1),
+              paddingHorizontal: lib.size.gap(1),
+            }}
+          >
+            <Text style={lib.style.font.title(undefined, "800")}>
+              {data.name}
+            </Text>
+            <View>{lib.icon.edit(18)}</View>
+          </View>
+          <View
+            style={{
+              padding: 8,
+              backgroundColor: lib.palette.MIST,
+              borderRadius: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={lib.style.font.description()}>
+              {data.introduceText}
+            </Text>
+            <View>{lib.icon.edit(16, lib.palette.GREY)}</View>
+          </View>
+        </View>
+        <View>
+          <ThumbnailComponent uri={data.thumbnail} type={ThumbnailType.LARGE} />
+        </View>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 24,
+          paddingHorizontal: 4,
+          gap: 12,
+        }}
+      >
+        <BoardItem name={"팔로워"} value={14} />
+        <BoardItem name={"팔로잉"} value={0} />
+        <BoardItem name={"프리미엄 구독자"} value={14} />
+        <BoardItem name={"구독중인 프리미엄"} value={0} />
+      </View>
+    </View>
+  );
+};
+
+const UserTab = ({ selectedTab, setSelectedTab }) => {
+  return (
+    <View style={{ backgroundColor: "white" }}>
+      <View style={deco.tabContainer}>
+        <TouchableOpacity
+          onPress={() => setSelectedTab("post")}
+          style={[
+            deco.tabItem,
+            selectedTab == "post" ? deco.selected : undefined,
+          ]}
+        >
+          {lib.icon.post(
+            undefined,
+            selectedTab == "post" ? undefined : lib.palette.GREY
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => setSelectedTab("pin")}
+          style={[
+            deco.tabItem,
+            selectedTab == "pin" ? deco.selected : undefined,
+          ]}
+        >
+          {lib.icon.map(
+            undefined,
+            selectedTab == "pin" ? undefined : lib.palette.GREY
+          )}
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
 export default function UserScreen() {
   const [data, setData] = useState<any>();
+  const [selectedTab, setSelectedTab] = useState<string | undefined>("post");
+  const layout = useWindowDimensions();
   //data receive
   useEffect(() => {
     setData(SAMPLE);
@@ -44,78 +144,49 @@ export default function UserScreen() {
 
   return (
     <SafeAreaView style={deco.wrap}>
-      <ScrollView stickyHeaderIndices={[1]}>
-        {/* 유저 카드 영역 */}
-        <View style={deco.cardContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 12,
-            }}
-          >
-            <View style={{ flex: 1, gap: 12 }}>
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <Text style={lib.style.font.subtitle(undefined, "800")}>
-                  {data.name}
-                </Text>
+      {selectedTab == "post" && (
+        <ScrollView stickyHeaderIndices={[1]}>
+          {/* 유저 카드 영역 */}
+          <UserCard data={data} />
+          {/* 탭 컨테이너 영역 */}
+          <UserTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <View style={{ flex: 1 }}>
+            {selectedTab == "post" ? (
+              <View>
+                {SAMPLE2.map((item, index) => {
+                  return <RecordCard key={index} data={item} />;
+                })}
               </View>
-              <View
-                style={{
-                  padding: 8,
-                  backgroundColor: lib.palette.MIST,
-                  borderRadius: 12,
-                }}
-              >
-                <Text style={lib.style.font.description()}>
-                  {data.introduceText}
-                </Text>
+            ) : selectedTab == "pin" ? (
+              <View style={{ flex: 1, height: layout.height }}>
+                <MapComponent />
               </View>
-            </View>
-            <View>
-              <ThumbnailComponent
-                uri={data.thumbnail}
-                type={ThumbnailType.LARGE}
-              />
-            </View>
+            ) : (
+              <View></View>
+            )}
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 24,
-              paddingHorizontal: 4,
-              gap: 12,
-            }}
-          >
-            <BoardItem name={"팔로워"} value={14} />
-            <BoardItem name={"팔로잉"} value={0} />
-            <BoardItem name={"프리미엄 구독자"} value={14} />
-            <BoardItem name={"구독중인 프리미엄"} value={0} />
-          </View>
-        </View>
-        {/* 탭 컨테이너 영역 */}
-        <View style={{ backgroundColor: "white" }}>
-          <View style={deco.tabContainer}>
-            <View style={[deco.tabItem, deco.selected]}>{lib.icon.post()}</View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
+        </ScrollView>
+      )}
+      {selectedTab == "pin" && (
+        <View style={{ flex: 1 }}>
+          {/* 유저 카드 영역 */}
+          <UserCard data={data} />
+          {/* 탭 컨테이너 영역 */}
+          <UserTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <View style={{ flex: 1, height: layout.height }}>
+            <MapComponent
+              region={{
+                latitude: 37.49,
+                longitude: 127.02761,
+                latitudeDelta: 8,
+                longitudeDelta: 10,
               }}
-            >
-              {lib.icon.premium()}
-            </View>
+              clusteringEnabled
+              zoomEnabled
+            />
           </View>
         </View>
-        <View>
-          <View style={deco.container}>
-            {SAMPLE2.map((item, index) => {
-              return <RecordCard key={index} data={item} />;
-            })}
-          </View>
-        </View>
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -138,9 +209,8 @@ const deco = StyleSheet.create({
   },
 
   tabContainer: {
-    marginTop: 12,
     borderBottomWidth: 0.5,
-    borderColor: lib.palette.SILVER,
+    borderColor: lib.palette.MIST,
     flexDirection: "row",
   },
 

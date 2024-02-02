@@ -3,13 +3,15 @@ import lib from "../../lib";
 import PostImageCarousel from "../carousel/PostImageCarousel";
 import { useRef, useState } from "react";
 
+const DEFAULT_HORIZONTAL_GAP = lib.size.gap(3);
+const DEFAULT_VERTICAL_GAP = lib.size.gap(4);
 /**
  * 카드 헤더 뷰
  *
  */
 const CardHeader = ({ uri, id }) => {
   return (
-    <View style={[deco.row]}>
+    <View style={[deco.row, { paddingHorizontal: DEFAULT_HORIZONTAL_GAP }]}>
       <View style={deco.col1}>
         <Image source={{ uri }} style={deco.headerThumb} />
       </View>
@@ -34,33 +36,32 @@ const CardHeader = ({ uri, id }) => {
  * 카드 컨텐츠 뷰
  *
  */
-const CardContent = ({ text, mediaSet }) => {
+const CardContent = ({ text, mediaSet, contentWidth, offset }) => {
   const pack = [];
 
-  if (text) {
+  if (mediaSet && mediaSet.length) {
     pack.push(
-      <View key={pack.length} style={deco.row}>
-        <View style={deco.col1} />
-        <View
-          style={[
-            deco.col2,
-            {
-              paddingHorizontal: lib.size.gap(0),
-            },
-          ]}
-        >
-          <Text style={lib.style.font.normal(undefined, "400")}>{text}</Text>
+      <View key={pack.length} style={[deco.row]}>
+        {/* {wide == false && <View style={deco.col1} />} */}
+        <View style={[deco.col2, {}]}>
+          <PostImageCarousel
+            data={mediaSet}
+            contentWidth={contentWidth}
+            offset={offset}
+          />
         </View>
       </View>
     );
   }
-
-  if (mediaSet && mediaSet.length) {
+  if (text) {
     pack.push(
-      <View key={pack.length} style={deco.row}>
-        <View style={deco.col1} />
+      <View
+        key={pack.length}
+        style={[deco.row, { paddingHorizontal: DEFAULT_HORIZONTAL_GAP }]}
+      >
+        {/* {wide == false && <View style={deco.col1} />} */}
         <View style={[deco.col2]}>
-          <PostImageCarousel data={mediaSet} />
+          <Text style={lib.style.font.normal(undefined, "400")}>{text}</Text>
         </View>
       </View>
     );
@@ -73,11 +74,16 @@ const CardContent = ({ text, mediaSet }) => {
  *  카드 스탯 뷰
  */
 
-const CardStat = () => {
+const CardStat = ({ wide }) => {
   const ICON_SIZE = 18;
   return (
-    <View style={deco.row}>
-      <View style={deco.col1} />
+    <View
+      style={[
+        deco.row,
+        { paddingHorizontal: DEFAULT_HORIZONTAL_GAP, paddingTop: 0 },
+      ]}
+    >
+      {/* {wide == false && <View style={deco.col1} />} */}
       <View style={[deco.col2, deco.statContainer]}>
         <View style={deco.statItem}>
           {lib.icon.heart(ICON_SIZE)}
@@ -99,32 +105,47 @@ interface RecordCardProps {
     user: any;
     content: any;
   };
+  wide?: boolean;
 }
 
-export default function RecordCard({ data }: RecordCardProps) {
+export default function RecordCard({ data, wide = false }: RecordCardProps) {
   const { user, content } = data;
 
+  const [contentWidth, setContentWidth] = useState(320);
+
+  const onLayout = (event) => {
+    setContentWidth(event.nativeEvent.layout.width);
+  };
+
   return (
-    <View style={deco.wrap}>
+    <View style={deco.wrap} onLayout={onLayout}>
       <CardHeader uri={user.thumb} id={user.id} />
-      <CardContent text={content.text} mediaSet={content.media} />
-      <CardStat />
+      <CardContent
+        text={content.text}
+        mediaSet={content.media}
+        contentWidth={contentWidth}
+        offset={0}
+      />
+      <CardStat wide={wide} />
     </View>
   );
 }
 
 const THUMB_SIZE = lib.size.length(6);
-const GAP = lib.size.gap(2);
 
 const deco = StyleSheet.create({
   wrap: {
     backgroundColor: lib.palette.WHITE,
-    gap: lib.size.gap(1),
-    padding: lib.size.gap(4),
+    gap: DEFAULT_VERTICAL_GAP,
+    paddingVertical: DEFAULT_VERTICAL_GAP,
+    paddingBottom: lib.size.gap(6),
+    borderRadius: 12,
+    borderBottomColor: lib.palette.MIST,
+    borderBottomWidth: 3,
   },
   row: {
     flexDirection: "row",
-    gap: lib.size.gap(2),
+    gap: DEFAULT_VERTICAL_GAP,
   },
   col1: {
     width: THUMB_SIZE,
@@ -146,8 +167,8 @@ const deco = StyleSheet.create({
 
   statContainer: {
     flexDirection: "row",
-    gap: lib.size.gap(5),
-    paddingVertical: lib.size.gap(2),
+    gap: DEFAULT_HORIZONTAL_GAP * 4,
+    paddingTop: lib.size.gap(1),
   },
 
   statItem: {

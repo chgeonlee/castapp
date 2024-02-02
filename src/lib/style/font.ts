@@ -1,4 +1,4 @@
-import { StyleProp, TextStyle } from "react-native/types";
+import { PixelRatio, StyleProp, TextStyle } from "react-native";
 import palette from "../palette";
 
 type fontWeightType =
@@ -38,8 +38,8 @@ export default class Font {
     w: fontWeightType = "300"
   ): StyleProp<TextStyle> => {
     return {
-      fontFamily: "Railway-Bold",
-      fontSize: 16,
+      fontFamily: "Railway-Medium",
+      fontSize: 15,
       fontWeight: w,
       color: c,
     };
@@ -62,7 +62,7 @@ export default class Font {
     w: fontWeightType = "400"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: w,
       color: c,
     };
@@ -73,7 +73,7 @@ export default class Font {
     w: fontWeightType = "400"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: w,
       color: c,
     };
@@ -84,10 +84,10 @@ export default class Font {
     w: fontWeightType = "400"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: w,
       color: c,
-      lineHeight: 24,
+      lineHeight: 20,
     };
   };
 
@@ -96,7 +96,7 @@ export default class Font {
     w: fontWeightType = "300"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 11,
+      fontSize: 12,
       fontWeight: w,
       color: c,
     };
@@ -107,7 +107,7 @@ export default class Font {
     w: fontWeightType = "300"
   ): StyleProp<TextStyle> => {
     return {
-      fontSize: 10,
+      fontSize: 11,
       fontWeight: w,
       color: c,
     };

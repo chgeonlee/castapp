@@ -33,6 +33,7 @@ const TabNavigator = () => {
           headerShown: true,
           tabBarIcon: ({ color }) => lib.icon.home(undefined, color),
           //header: () => <Header name={constants.screen.TAB_HOME} />,
+          header: () => null,
         }}
       />
       <Tab.Screen
@@ -40,7 +41,8 @@ const TabNavigator = () => {
         component={PostScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.post(undefined, color),
-          header: () => <Header name={constants.screen.TAB_POST} />,
+          // header: () => <Header name={constants.screen.TAB_POST} />,
+          header: () => null,
         }}
       />
       <Tab.Screen
@@ -48,9 +50,10 @@ const TabNavigator = () => {
         component={PinScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.mark(undefined, color),
-          header: () => (
-            <Header name={constants.screen.TAB_MARK} onAdd={() => {}} />
-          ),
+          // header: () => (
+          //   <Header name={constants.screen.TAB_MARK} onAdd={() => {}} />
+          // ),
+          header: () => null,
         }}
       />
       <Tab.Screen
@@ -58,7 +61,8 @@ const TabNavigator = () => {
         component={FindScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.find(undefined, color),
-          header: () => <Header name={constants.screen.TAB_FIND} />,
+          // header: () => <Header name={constants.screen.TAB_FIND} />,
+          header: () => null,
         }}
       />
       <Tab.Screen

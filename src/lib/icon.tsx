@@ -63,6 +63,10 @@ class Icon {
   map = (s: number = DEFAULT_SIZE, c: string = palette.BLACK) => {
     return <FontAwesome6Icon name="map-location-dot" size={s} color={c} />;
   };
+
+  edit = (s: number = DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <FeatherIcon name="edit" size={s} color={c} />;
+  };
 }
 
 export default new Icon();

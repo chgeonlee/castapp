@@ -29,8 +29,8 @@ export default function PlainLabel({
 const deco = StyleSheet.create({
   wrap: {
     //borderWidth: 0.5,
-    paddingVertical: lib.size.gap(0),
-    paddingHorizontal: lib.size.gap(3),
+    paddingVertical: lib.size.gap(1),
+    paddingHorizontal: lib.size.gap(4),
     borderRadius: lib.size.gap(4),
     backgroundColor: lib.palette.MIST,
   },

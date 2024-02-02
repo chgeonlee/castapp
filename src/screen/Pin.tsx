@@ -5,103 +5,148 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import RecordCard from "../component/card/record";
 import EnableLocationViewComponent from "../component/EnableLocation";
 import PlainLabel from "../component/label/plain";
+import MapComponent from "../component/Map";
+import Header from "../Header";
 import useLocation from "../hook/useLocation";
 import lib from "../lib";
+
+const FilterView = ({ filter, onFilter, mode, onMode }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: lib.palette.WHITE,
+        paddingHorizontal: lib.size.gap(0),
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: lib.size.gap(2),
+        }}
+      >
+        <View style={deco.filterContainer}>
+          <Pressable onPress={() => onFilter("all")}>
+            <PlainLabel name={"전체"} selected={filter == "all"} />
+          </Pressable>
+          <Pressable onPress={() => onFilter("my")}>
+            <PlainLabel name={"내 기록 6"} selected={filter == "my"} />
+          </Pressable>
+          <Pressable onPress={() => onFilter("linked")}>
+            <PlainLabel name={"연결된 120"} selected={filter == "linked"} />
+          </Pressable>
+        </View>
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => onMode(mode == "list" ? "map" : "list")}
+        >
+          <PlainLabel name={mode == "list" ? "지도보기" : "리스트보기"} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const LocationView = ({ address }) => {
+  const getLocationText = () => {
+    return address.region + " " + address.district + ", " + address.name;
+  };
+  return (
+    <View
+      style={{
+        backgroundColor: "#f2f2f2",
+        margin: lib.size.gap(2),
+        padding: lib.size.gap(2),
+        flexDirection: "row",
+        gap: lib.size.gap(2),
+        borderRadius: 32,
+      }}
+    >
+      <View
+        style={{
+          width: 28,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {lib.icon.navi(13, lib.palette.GREY)}
+      </View>
+      <Text style={lib.style.font.description()}>{getLocationText()}</Text>
+    </View>
+  );
+};
 
 export default function PinScreen() {
   const { availableLocation, locationData } = useLocation();
 
   const [filter, setFilter] = useState<string>("all");
+  const [mode, setMode] = useState<"list" | "map">("list");
+
+  const layout = useWindowDimensions();
 
   if (availableLocation == false || locationData == null) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: lib.palette.WHITE,
+        }}
+      >
         <EnableLocationViewComponent />
       </SafeAreaView>
     );
   }
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ backgroundColor: lib.palette.WHITE }}>
-        <View style={deco.locationContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 1,
-              gap: 12,
-              paddingBottom: 4,
-            }}
-          >
-            <View
-              style={{
-                width: 32,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {lib.icon.mark()}
-            </View>
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={lib.style.font.normal(undefined, "500")}>
-                {locationData?.address.region} {locationData?.address.district}
-                {", "}
-                {locationData?.address.name}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          backgroundColor: "white",
+  const pack = [];
 
-          padding: lib.size.gap(2),
-        }}
-      >
-        <View style={deco.filterContainer}>
-          <Pressable onPress={() => setFilter("all")}>
-            <PlainLabel name={"전체"} selected={filter == "all"} />
-          </Pressable>
-          <Pressable onPress={() => setFilter("linked")}>
-            <PlainLabel name={"연결된"} selected={filter == "linked"} />
-          </Pressable>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <PlainLabel name={"지도보기"} />
-        </View>
+  pack.push(<Header key={pack.length} name={"Local"} />);
+  pack.push(
+    <FilterView
+      key={pack.length}
+      mode={mode}
+      filter={filter}
+      onFilter={(v) => setFilter(v)}
+      onMode={(v) => setMode(v)}
+    />
+  );
+  pack.push(<LocationView key={pack.length} address={locationData.address} />);
+
+  if (mode == "list") {
+    pack.push(
+      <View key={pack.length} style={deco.container}>
+        {SAMPLE.map((item, index) => {
+          return <RecordCard key={index} data={item} wide={false} />;
+        })}
       </View>
-      <ScrollView>
-        <View
-          style={{
-            // justifyContent: "center",
-            //alignItems: "center",
-            backgroundColor: lib.palette.WHITE,
+    );
+  } else {
+    pack.push(
+      <View key={pack.length} style={{ flex: 1, height: layout.height - 290 }}>
+        <MapComponent
+          region={{
+            latitude: locationData.location.coords.latitude,
+            longitude: locationData.location.coords.longitude,
+            latitudeDelta: 0.03,
+            longitudeDelta: 0.03,
           }}
-        ></View>
-        <View style={deco.container}>
-          {SAMPLE.map((item, index) => {
-            return <RecordCard key={index} data={item} />;
-          })}
-        </View>
-      </ScrollView>
+        />
+      </View>
+    );
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: lib.palette.WHITE }}>
+      <ScrollView stickyHeaderIndices={[1]}>{pack}</ScrollView>
     </SafeAreaView>
   );
 }
@@ -118,7 +163,6 @@ const deco = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: lib.size.gap(1),
-    backgroundColor: lib.palette.WHITE,
   },
   container: {
     gap: 2,

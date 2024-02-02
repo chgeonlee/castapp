@@ -1,6 +1,9 @@
+import { BlurView } from "expo-blur";
 import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
 import PlainButton from "../component/button/plain";
 import BaseInput from "../component/input/base";
+import constants from "../constants";
+import Header from "../Header";
 import lib from "../lib";
 import { Direction } from "../lib/style";
 
@@ -8,38 +11,60 @@ export default function FindScreen() {
   const style = lib.style;
 
   return (
-    <SafeAreaView style={style.spec.span(1).back()}>
-      <View style={style.spec.pad(8, Direction.HORIZONTAL)}>
-        <BaseInput placeholder={"유저 이름 혹은 아이디"} />
-      </View>
-      {/* 결과 스크롤뷰 */}
-      <ScrollView>
-        <View style={style.spec}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: lib.palette.WHITE,
+      }}
+    >
+      <ScrollView stickyHeaderIndices={[1]}>
+        <Header name={constants.screen.TAB_FIND} />
+        <BlurView intensity={5} tint="light">
+          <View style={{ padding: lib.size.gap(4) }}>
+            <BaseInput placeholder={"유저 이름 혹은 아이디"} />
+          </View>
+        </BlurView>
+
+        {/* 결과 뷰 */}
+        <View>
           {[...SAMPLE, ...SAMPLE, ...SAMPLE, ...SAMPLE].map((item, idx) => {
             const iw = 34;
-
+            //style.spec
+            // .pad(12, Direction.HORIZONTAL)
+            // .pad(16, Direction.VERTICAL)
+            // .edge(1, Direction.BOTTOM, lib.palette.MIST)
             return (
               <View
                 key={idx}
-                style={style.spec
-                  .pad(12, Direction.HORIZONTAL)
-                  .pad(16, Direction.VERTICAL)
-                  .edge(1, Direction.BOTTOM, lib.palette.MIST)}
+                style={{
+                  padding: lib.size.gap(3),
+                  borderBottomWidth: 1,
+                  borderBottomColor: lib.palette.MIST,
+                }}
               >
-                <View style={style.spec.port().gap(12)}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
                   <View style={style.spec.span(0.2).block(iw).align("center")}>
                     <Image
                       source={{ uri: item.thumb }}
-                      style={style.spec.block(iw, iw).addCircle(iw).edge(0.5)}
+                      style={{
+                        width: iw,
+                        height: iw,
+                        borderRadius: iw,
+                        borderWidth: 0.5,
+                      }}
                     />
                   </View>
-                  <View style={style.spec.span(1).align("center").gap(4)}>
+                  <View style={{ flex: 1, justifyContent: "center" }}>
                     <Text style={style.font.default(undefined, "700")}>
                       {item.id}
                     </Text>
                     <Text style={style.font.description()}>{item.name}</Text>
                   </View>
-                  <View style={style.spec.span(0.4).align("center")}>
+                  <View style={{ flex: 0.5, justifyContent: "center" }}>
                     <PlainButton name={"팔로우하기"} onPress={() => {}} />
                   </View>
                 </View>

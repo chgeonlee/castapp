@@ -2,16 +2,19 @@ import { Dimensions, Image, View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { Video, ResizeMode } from "expo-av";
 import { useRef, useState } from "react";
+import lib from "../../lib";
 
-const MAX_HEIGHT = 400;
+const MAX_HEIGHT = 320;
 
-const PostImageCarousel = ({ data, wide }: any) => {
+const PostImageCarousel = ({
+  data,
+  contentWidth = undefined,
+  offset = 0,
+}: any) => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
 
-  const p = wide ? 0 : 58;
-  const g = 6;
-  let contentWidth = Dimensions.get("window").width - 2 * p;
+  let cw = contentWidth;
   let itemWidth = 0;
   let itemHeight = 0;
 
@@ -21,26 +24,31 @@ const PostImageCarousel = ({ data, wide }: any) => {
       const { width, height } = item.size;
       const ratio = height / width;
 
-      itemWidth = width > contentWidth ? contentWidth : width;
+      //itemWidth = width > cw ? cw : width;
+      itemWidth = cw;
       itemHeight = itemWidth * ratio;
 
       if (itemHeight > MAX_HEIGHT) {
         itemHeight = MAX_HEIGHT;
-        itemWidth = itemHeight / ratio;
+        //itemWidth = itemHeight / ratio;
       }
     }
   } else {
     //let c = data.length > 2 ? 3 : 2;
-    let c = 2;
-    itemWidth = (contentWidth + p) / c;
-    itemHeight = itemWidth * 1.5;
+    let c = 1.2;
+    itemWidth = cw / c;
+    itemHeight = itemWidth / 1.66;
+    if (itemHeight > MAX_HEIGHT) {
+      itemHeight = MAX_HEIGHT;
+      //itemWidth = itemHeight / ratio;
+    }
   }
 
   const renderItem = ({ item }: any) => {
     return (
       <View
         style={{
-          width: contentWidth,
+          width: cw,
           height: itemHeight,
           justifyContent: "center",
         }}
@@ -49,7 +57,7 @@ const PostImageCarousel = ({ data, wide }: any) => {
           style={{
             width: itemWidth,
             height: itemHeight,
-            borderRadius: 8,
+            borderRadius: 0,
             overflow: "hidden",
           }}
         >
@@ -91,12 +99,11 @@ const PostImageCarousel = ({ data, wide }: any) => {
       renderItem={renderItem}
       sliderWidth={Dimensions.get("window").width}
       activeSlideAlignment={"start"}
-      itemWidth={itemWidth + g}
+      itemWidth={itemWidth + 6}
       inactiveSlideScale={1}
       inactiveSlideOpacity={1}
       containerCustomStyle={{
-        marginLeft: -p,
-        paddingLeft: p,
+        marginLeft: offset,
       }}
     ></Carousel>
   );

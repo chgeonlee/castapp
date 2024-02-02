@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import RecordCard from "../component/card/record";
 import PlainLabel from "../component/label/plain";
+import Header from "../Header";
 import lib from "../lib";
 
 export default function PostScreen() {
@@ -15,18 +16,34 @@ export default function PostScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={deco.filterContainer}>
-        <Pressable onPress={() => setFilter("all")}>
-          <PlainLabel name={"전체"} selected={filter == "all"} />
-        </Pressable>
-        <Pressable onPress={() => setFilter("popular")}>
-          <PlainLabel name={"인기있는"} selected={filter == "popular"} />
-        </Pressable>
-        <Pressable onPress={() => setFilter("linked")}>
-          <PlainLabel name={"연결된"} selected={filter == "linked"} />
-        </Pressable>
-      </View>
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[1]}>
+        <Header name={"Public"} />
+        <View
+          style={{
+            backgroundColor: lib.palette.WHITE,
+            paddingHorizontal: lib.size.gap(0),
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: lib.size.gap(2),
+            }}
+          >
+            <View style={deco.filterContainer}>
+              <Pressable onPress={() => setFilter("all")}>
+                <PlainLabel name={"전체"} selected={filter == "all"} />
+              </Pressable>
+              <Pressable onPress={() => setFilter("popular")}>
+                <PlainLabel name={"인기있는"} selected={filter == "popular"} />
+              </Pressable>
+              <Pressable onPress={() => setFilter("linked")}>
+                <PlainLabel name={"연결된"} selected={filter == "linked"} />
+              </Pressable>
+            </View>
+          </View>
+        </View>
         <View style={deco.container}>
           {SAMPLE.map((item, index) => {
             return <RecordCard key={index} data={item} />;
@@ -41,10 +58,7 @@ const deco = StyleSheet.create({
   filterContainer: {
     flexDirection: "row",
     alignItems: "center",
-
     gap: lib.size.gap(1),
-    padding: lib.size.gap(4),
-    backgroundColor: lib.palette.WHITE,
   },
   container: {
     gap: 2,

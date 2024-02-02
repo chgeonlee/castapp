@@ -8,11 +8,12 @@ export default function BaseInput({ placeholder }) {
       style={{
         height: 36,
         borderWidth: 1,
-        borderColor: lib.palette.GREY,
+        borderColor: lib.palette.SILVER,
         borderRadius: 32,
         paddingHorizontal: 12,
         flexDirection: "row",
         gap: 4,
+        backgroundColor: lib.palette.WHITE,
       }}
     >
       <View style={{ justifyContent: "center", height: "100%" }}>

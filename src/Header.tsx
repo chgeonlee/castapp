@@ -5,14 +5,33 @@ export interface HeaderProps {
   name: string;
   onAdd?: () => void;
   onBack?: () => void;
+  icon?: any;
 }
 
-export default function Header({ name, onAdd, onBack }: HeaderProps) {
+export default function Header({ name, onAdd, onBack, icon }: HeaderProps) {
   return (
     <View style={deco.wrap}>
       <View style={deco.icon}></View>
-      <Text style={lib.style.font.header()}>{name}</Text>
-
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 12,
+          alignItems: "center",
+          paddingVertical: 12,
+        }}
+      >
+        {icon && (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {icon}
+          </View>
+        )}
+        <Text style={lib.style.font.header()}>{name}</Text>
+      </View>
       {onAdd ? (
         <TouchableOpacity
           onPress={onAdd}
