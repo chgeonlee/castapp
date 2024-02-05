@@ -1,7 +1,11 @@
 import { DeviceEventEmitter } from "react-native";
 
-export default class Wire {
+class Wire {
   private _map = {};
+
+  fire = (e: string) => {
+    DeviceEventEmitter.emit(e);
+  };
 
   on = (e: string, f: (...args: any) => void) => {
     this._map[e] = (this._map[e] || 0) + 1;
@@ -13,11 +17,7 @@ export default class Wire {
     DeviceEventEmitter.removeAllListeners(e);
   };
 
-  fire = (e: string) => {
-    DeviceEventEmitter.emit(e);
-  };
-
-  destroy() {
+  clear() {
     Object.keys(this._map).map((nkey) => {
       delete this._map[nkey];
     });
@@ -29,3 +29,5 @@ export default class Wire {
     });
   }
 }
+
+export default new Wire();

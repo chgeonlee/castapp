@@ -1,9 +1,9 @@
-import icon from "./icon";
-import location from "./location";
+import Const from "./const";
+import Icon from "./icon";
 import palette from "./palette";
-import size from "./size";
-import style from "./style";
-import wire from "./wire";
+import Size from "./size";
+import Style from "./style";
+import Wire from "./wire";
 
 class Library {
   private static _instance: Library;
@@ -11,28 +11,34 @@ class Library {
     return this._instance || (this._instance = new Library());
   }
 
-  public get palette() {
+  private _country;
+  private constructor() {
+    // read country code
+    this._country = "KR";
+  }
+
+  get const() {
+    return new Const(this._country);
+  }
+
+  get style() {
+    return new Style();
+  }
+
+  get palette() {
     return palette;
   }
 
-  public get size() {
-    return size;
+  get icon() {
+    return new Icon();
   }
 
-  public get icon() {
-    return icon;
+  get size() {
+    return new Size();
   }
 
-  public get wire() {
-    return wire;
-  }
-
-  public get style() {
-    return style;
-  }
-
-  public get location() {
-    return location;
+  get wire() {
+    return new Wire();
   }
 }
 

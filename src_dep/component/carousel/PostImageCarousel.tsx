@@ -1,4 +1,4 @@
-import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { Dimensions, Image, View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { Video, ResizeMode } from "expo-av";
 import { useRef, useState } from "react";
@@ -6,55 +6,7 @@ import lib from "../../lib";
 
 const MAX_HEIGHT = 320;
 
-const PostImageCarousel = ({ data }) => {
-  let itemWidth = 235;
-  let gap = lib.size.gap(0);
-
-  const renderItem = ({ item }) => {
-    return (
-      <View
-        style={{
-          width: item.size.width,
-          height: item.size.height,
-          justifyContent: "center",
-        }}
-      >
-        <Image
-          source={{ uri: item.url }}
-          style={{
-            ...styles.media,
-            width: item.size.width,
-            height: item.size.height,
-          }}
-        />
-      </View>
-    );
-  };
-
-  return (
-    <Carousel
-      data={data}
-      renderItem={renderItem}
-      sliderWidth={Dimensions.get("window").width}
-      activeSlideAlignment={"start"}
-      itemWidth={itemWidth + gap}
-      inactiveSlideScale={1}
-      inactiveSlideOpacity={1}
-      containerCustomStyle={{
-        marginLeft: -lib.size.colw(2),
-        paddingLeft: lib.size.colw(2),
-      }}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  media: {
-    borderRadius: lib.size.round(2),
-  },
-});
-
-const PostImageCarousel3 = ({
+const PostImageCarousel = ({
   data,
   contentWidth = undefined,
   offset = 0,
@@ -62,9 +14,7 @@ const PostImageCarousel3 = ({
   const video = useRef(null);
   const [status, setStatus] = useState({});
 
-  if (data.length == 0) return;
-
-  let cw = contentWidth || data[0].size.width;
+  let cw = contentWidth;
   let itemWidth = 0;
   let itemHeight = 0;
 
@@ -93,8 +43,6 @@ const PostImageCarousel3 = ({
       //itemWidth = itemHeight / ratio;
     }
   }
-
-  console.log("--->", itemHeight, itemWidth);
 
   const renderItem = ({ item }: any) => {
     return (
@@ -155,8 +103,7 @@ const PostImageCarousel3 = ({
       inactiveSlideScale={1}
       inactiveSlideOpacity={1}
       containerCustomStyle={{
-        marginLeft: -100,
-        paddingLeft: 100,
+        marginLeft: offset,
       }}
     ></Carousel>
   );

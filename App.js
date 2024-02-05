@@ -1,7 +1,7 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
-import Stage from "./src/stage";
 import { View } from "react-native";
+import Stage from "./src";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

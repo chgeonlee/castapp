@@ -1,5 +1,3 @@
-import mark from "./mark";
-import MarkResource from "./mark";
 import user from "./user";
 
 class Resources {
@@ -10,10 +8,6 @@ class Resources {
 
   public get user() {
     return user;
-  }
-
-  public get mark() {
-    return mark;
   }
 }
 

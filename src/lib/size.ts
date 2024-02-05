@@ -1,19 +1,77 @@
-class Size {
-  readonly DEFAULT_GAP_SIZE = 3;
-  readonly DEFAULT_LEN_SIZE = 4;
-  readonly DEFAULT_COL_SIZE = 12;
-
-  gap(scale) {
-    return 4 + this.DEFAULT_GAP_SIZE * scale;
+export default class Size {
+  // row height
+  rowh(scale: number = 0) {
+    const unit = 8;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 4);
+      default:
+        return unit * 4;
+    }
   }
 
-  length(scale) {
-    return 8 + this.DEFAULT_LEN_SIZE * scale;
+  colw(scale: number = 0) {
+    const unit = 8;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 4);
+      default:
+        return unit * 4;
+    }
   }
 
-  col(scale) {
-    return this.DEFAULT_COL_SIZE + this.DEFAULT_COL_SIZE * scale;
+  gap(scale: number = 0) {
+    const unit = 8;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 1);
+      default:
+        return unit;
+    }
+  }
+
+  // vertical gap
+  vgap(scale: number = 0) {
+    const unit = 10;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 1);
+      default:
+        return unit;
+    }
+  }
+
+  // horizontal gap
+  hgap(scale: number = 0) {
+    const unit = 14;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 1);
+      default:
+        return unit;
+    }
+  }
+
+  //border-radius
+  round(scale: number = 0) {
+    const unit = 4;
+    switch (scale) {
+      case 0:
+      case 1:
+      case 2:
+        return unit * (scale + 1);
+      default:
+        return unit;
+    }
   }
 }
-
-export default new Size();
