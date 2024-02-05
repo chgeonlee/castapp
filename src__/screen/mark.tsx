@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import RecordCard from "../component/card/record";
-import Header from "../component/header";
 import { TextLabel } from "../component/label";
 import LoadingViewComponent from "../component/loading";
 import lib from "../lib";
 import { ViewModeEnum } from "../lib/const";
 import { Strings } from "../lib/const/string";
-import { BorderDirection } from "../lib/style";
 import resources from "../resources";
 import { MarkDataProps } from "../resources/mark";
 
@@ -37,6 +35,10 @@ export default function MarkScreen() {
   const [filter, setFilter] = useState(null);
   const [data, setData] = useState<MarkDataProps[] | null>(null);
   const [loadingData, setLoadingData] = useState(true);
+
+  const handleScroll = (event) => {
+    console.log(event)
+  }
 
   useEffect(() => {
     const loadData = () => {
@@ -100,6 +102,7 @@ export default function MarkScreen() {
         key={pack.length}
         style={styles.wrap}
         stickyHeaderIndices={[0]}
+        onScroll={handleScroll}
       >
         {nset}
       </ScrollView>
