@@ -32,7 +32,7 @@ const TabNavigator = () => {
         component={MarkScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.mark(undefined, color),
-          header: () => <Header />,
+          header: () => null // <Header />,
         }}
       />
       <Tab.Screen

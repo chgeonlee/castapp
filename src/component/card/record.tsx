@@ -64,17 +64,20 @@ const styles = StyleSheet.create({
   },
   row1: {
     ...lib.style.flat(),
-    height: lib.size.rowh(0),
+    height: lib.size.rowh(1),
+    alignItems:"center",
+    gap: 8//lib.size.hgap(0)
   },
   row2: {
     ...lib.style.flat(),
+    gap: 8//lib.size.hgap(0)
+    
   },
   col1: {
-    width: lib.size.colw(0),
+    width: lib.size.colw(1),
   },
   col2: {
-    paddingHorizontal: lib.size.hgap(0),
-    rowGap: lib.size.vgap(1),
+    rowGap: lib.size.vgap(0),
     columnGap: lib.size.hgap(1),
     flex: 1,
   },
@@ -82,6 +85,8 @@ const styles = StyleSheet.create({
   thumbnail: {
     ...lib.style.border(),
     ...lib.style.fill(),
+    height: 34,
+    width: 34,
     borderRadius: 100,
   },
 

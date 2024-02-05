@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import RecordCard from "../component/card/record";
 import { TextLabel } from "../component/label";
@@ -8,11 +8,11 @@ import { ViewModeEnum } from "../lib/const";
 import { Strings } from "../lib/const/string";
 import resources from "../resources";
 import { MarkDataProps } from "../resources/mark";
+import Header from "../component/header";
 
-const FilterView = ({ filter }) => {
+const FilterView = ({ filter, deco }) => {
   return (
-    <View>
-      <View style={styles.setting}>
+      <View style={[styles.setting]}>
         <View style={styles.filter}>
           <TextLabel
             name={lib.const.string.get(Strings.STR_FILTER_ALL_LABEL)}
@@ -26,7 +26,6 @@ const FilterView = ({ filter }) => {
           <TextLabel name={lib.const.string.get(Strings.STR_MODE_MAP_VIEW)} />
         </View>
       </View>
-    </View>
   );
 };
 
@@ -35,9 +34,20 @@ export default function MarkScreen() {
   const [filter, setFilter] = useState(null);
   const [data, setData] = useState<MarkDataProps[] | null>(null);
   const [loadingData, setLoadingData] = useState(true);
-
+  const [filterViewStyle, setFilterViewStyle] = useState(styles.filter);
+  const [stickyIndex, setStickyIndex] = useState<null|number>();
+  const [scrollDirection, setScrollDirection] = useState();
+  const lastScrollY = useRef(0);
   const handleScroll = (event) => {
-    console.log(event)
+    const currentScrollY = event.nativeEvent.contentOffset.y;
+  
+    if( currentScrollY > lastScrollY.current ) {
+      setScrollDirection("down");
+    } else {
+      setScrollDirection("up");
+    }
+    lastScrollY.current = currentScrollY;
+
   }
 
   useEffect(() => {
@@ -82,7 +92,8 @@ export default function MarkScreen() {
     );
   } else {
     //c. 데이터 있을 경우, ViewMode가 list 일때
-    nset.push(<FilterView key={nset.length} filter={filter} />);
+    nset.push(<Header key={nset.length} />)
+    nset.push(<FilterView key={nset.length} filter={filter} deco={filterViewStyle} />);
     nset.push(
       <View key={nset.length} style={styles.location}>
         {lib.icon.mark(16)}
@@ -101,8 +112,10 @@ export default function MarkScreen() {
       <ScrollView
         key={pack.length}
         style={styles.wrap}
-        stickyHeaderIndices={[0]}
-        onScroll={handleScroll}
+        stickyHeaderIndices={[1]}
+        // onScroll={handleScroll}
+        
+        // scrollEventThrottle={30000}
       >
         {nset}
       </ScrollView>
@@ -120,14 +133,24 @@ const styles = StyleSheet.create({
 
   setting: {
     ...lib.style.flatBetween(),
-    height: lib.size.rowh(1),
+    height: lib.size.rowh(2),
     paddingHorizontal: lib.size.hgap(0),
     backgroundColor: lib.palette.WHITE,
+    // position:"absolute",
+    // top: 0,
+    // width: "100%",
+    // zIndex: 3000
   },
 
   filter: {
     ...lib.style.flat(),
     gap: lib.size.vgap(0),
+  },
+
+  filterHidden: {
+    ...lib.style.flat(),
+    gap: lib.size.vgap(0),
+    display: "none",  // 위로 스크롤할 때 숨김
   },
 
   location: {
