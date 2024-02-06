@@ -16,7 +16,8 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarShowLabel: false,
+        //tabBarShowLabel: false,
+        tabBarActiveTintColor: lib.palette.BLACK,
       }}
     >
       <Tab.Screen
@@ -32,7 +33,7 @@ const TabNavigator = () => {
         component={MarkScreen}
         options={{
           tabBarIcon: ({ color }) => lib.icon.mark(undefined, color),
-          header: () => null // <Header />,
+          header: () => null, // <Header />,
         }}
       />
       <Tab.Screen

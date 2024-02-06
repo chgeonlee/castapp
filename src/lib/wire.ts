@@ -1,6 +1,10 @@
 import { DeviceEventEmitter } from "react-native";
 
-export default class Wire {
+class Wire {
+  private static _instance: Wire;
+  public static get instance() {
+    return this._instance || (this._instance = new Wire());
+  }
   private _map = {};
 
   on = (e: string, f: (...args: any) => void) => {
@@ -29,3 +33,5 @@ export default class Wire {
     });
   }
 }
+
+export default Wire.instance;

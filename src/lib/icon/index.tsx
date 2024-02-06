@@ -48,4 +48,8 @@ export default class Icon {
   credit = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
     return <AntIcon name="creditcard" size={s} color={c} />;
   };
+
+  plus = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <Ionicons name="add-outline" size={s} color={c} />;
+  };
 }

@@ -3,7 +3,8 @@ import Icon from "./icon";
 import palette from "./palette";
 import Size from "./size";
 import Style from "./style";
-import Wire from "./wire";
+import time from "./time";
+import wire from "./wire";
 
 class Library {
   private static _instance: Library;
@@ -17,8 +18,9 @@ class Library {
     this._country = "KR";
   }
 
+  _const: Const;
   get const() {
-    return new Const(this._country);
+    return this._const || (this._const = new Const(this._country));
   }
 
   get style() {
@@ -38,7 +40,11 @@ class Library {
   }
 
   get wire() {
-    return new Wire();
+    return wire;
+  }
+
+  get time() {
+    return time;
   }
 }
 

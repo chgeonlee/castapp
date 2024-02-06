@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   wrap: {
     ...lib.style.center(),
     backgroundColor: lib.palette.MIST,
-    paddingVertical: lib.size.vgap(0),
-    paddingHorizontal: lib.size.hgap(0),
+    padding: lib.size.gap(0),
+    paddingHorizontal: lib.size.hgap(1),
     borderRadius: lib.size.round(0),
   },
 

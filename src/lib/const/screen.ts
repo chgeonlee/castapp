@@ -1,7 +1,7 @@
 export default class Screen {
-  readonly LOGIN = "login";
-  readonly HOME = "home";
-  readonly MARK = "mark";
-  readonly USER = "user";
-  readonly FIND = "find";
+  readonly LOGIN = "Login";
+  readonly HOME = "Home";
+  readonly MARK = "Near";
+  readonly USER = "User";
+  readonly FIND = "Find";
 }

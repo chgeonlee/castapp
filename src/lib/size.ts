@@ -1,64 +1,61 @@
+const UNIT = 4;
 export default class Size {
   // row height
   rowh(scale: number = 0) {
-    const unit = 8;
     switch (scale) {
       case 0:
       case 1:
       case 2:
-        return unit * (scale + 4);
+        return UNIT * (scale + 8);
       default:
-        return unit * 4;
+        return UNIT * 8;
     }
   }
 
   colw(scale: number = 0) {
-    const unit = 8;
     switch (scale) {
       case 0:
       case 1:
       case 2:
-        return unit * (scale + 4);
+        return UNIT * (scale + 8);
       default:
-        return unit * 4;
+        return UNIT * 8;
     }
   }
 
   gap(scale: number = 0) {
-    const unit = 8;
     switch (scale) {
       case 0:
       case 1:
       case 2:
-        return unit * (scale + 1);
+        return UNIT * (scale + 2);
       default:
-        return unit;
+        return UNIT;
     }
   }
 
   // vertical gap
   vgap(scale: number = 0) {
-    const unit = 10;
     switch (scale) {
       case 0:
       case 1:
       case 2:
-        return unit * (scale + 1);
+        return UNIT * (scale + 4);
       default:
-        return unit;
+        return UNIT;
     }
   }
 
   // horizontal gap
   hgap(scale: number = 0) {
-    const unit = 14;
     switch (scale) {
       case 0:
+        return 8;
       case 1:
       case 2:
-        return unit * (scale + 1);
+        return UNIT * (scale + 3);
       default:
-        return unit;
+        return UNIT;
     }
   }
 
@@ -69,9 +66,9 @@ export default class Size {
       case 0:
       case 1:
       case 2:
-        return unit * (scale + 1);
+        return UNIT * (scale + 1);
       default:
-        return unit;
+        return UNIT;
     }
   }
 }

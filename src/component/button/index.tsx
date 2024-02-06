@@ -6,5 +6,7 @@ export const IconButton = () => {
 };
 
 const styles = StyleSheet.create({
-  wrap: { ...lib.style.center() },
+  wrap: {
+    ...lib.style.center(),
+  },
 });
