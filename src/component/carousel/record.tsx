@@ -3,7 +3,7 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import { Video, ResizeMode } from "expo-av";
 import { useRef, useState } from "react";
 import lib from "../../lib";
-const MAX_HEIGHT = 412;
+const MAX_HEIGHT = 312;
 
 const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
   const g = lib.size.hgap(0);
@@ -29,6 +29,7 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
       return {
         itemWidth: w,
         itemHeight: h,
+        radius: lib.size.round(0),
       };
     } else if (data.length == 1) {
       const r = data[0].size.width / data[0].size.height;
@@ -40,17 +41,18 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
 
         if (isWide == false) w = r > 1 ? h / r : h * r;
       }
-
+      const radius = (52 * itemWidth) / itemHeight;
       return {
         itemWidth: w,
         itemHeight: h,
+        radius: lib.size.round(0),
       };
     } else {
       throw new Error();
     }
   };
 
-  const { itemWidth, itemHeight } = getSize();
+  const { itemWidth, itemHeight, radius } = getSize();
 
   let gap = lib.size.gap(0);
 
@@ -66,7 +68,7 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
         <Image
           source={{ uri: item.url }}
           style={{
-            ...styles.media,
+            borderRadius: radius,
             width: itemWidth,
             height: itemHeight,
           }}
@@ -91,11 +93,5 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  media: {
-    borderRadius: lib.size.round(0),
-  },
-});
 
 export default RecordCarousel;

@@ -3,6 +3,7 @@ import { Image, ImageProps, StyleSheet, Text, View } from "react-native";
 import lib from "../../lib";
 import { MarkDataProps } from "../../resources/mark";
 import RecordCarousel from "../carousel/record";
+import Typography, { TypographyType } from "../typography";
 
 export default function RecordCard({
   data,
@@ -11,7 +12,7 @@ export default function RecordCard({
   data: MarkDataProps;
   isWide?: boolean;
 }) {
-  const STAT_ICON_SIZE = 21;
+  const STAT_ICON_SIZE = 20;
   const [contentWidth, setContentWidth] = useState<number | null>();
   return (
     <View style={styles.wrap}>
@@ -25,10 +26,17 @@ export default function RecordCard({
           />
         </View>
         <View style={[styles.col2, lib.style.flatBetween()]}>
-          <Text>{data.user.id}</Text>
-          <View style={[lib.style.flat(), { alignItems: "center", gap: 4 }]}>
-            <Text>{lib.time.tickerForm(data.trace.created_at)}</Text>
-            <View>{lib.icon.more()}</View>
+          <Typography type={TypographyType.EMPHASIS}>{data.user.id}</Typography>
+          <View
+            style={[
+              lib.style.flat(),
+              { alignItems: "center", gap: 8, paddingHorizontal: 8 },
+            ]}
+          >
+            <Typography type={TypographyType.HINT}>
+              {lib.time.tickerForm(data.trace.created_at)}
+            </Typography>
+            <View>{lib.icon.more(undefined, lib.palette.GREY)}</View>
           </View>
         </View>
       </View>
@@ -42,11 +50,14 @@ export default function RecordCard({
         <View
           style={[styles.col2]}
           onLayout={(e) => {
-            const { x, y, width, height } = e.nativeEvent.layout;
-            setContentWidth(width);
+            setContentWidth(e.nativeEvent.layout.width);
           }}
         >
-          {data.record.text && <Text>{data.record.text}</Text>}
+          {data.record.text && (
+            <Typography type={TypographyType.ARTICLE}>
+              {data.record.text}
+            </Typography>
+          )}
           {data.record.mediaList &&
             data.record.mediaList.length > 0 &&
             contentWidth > 0 && (
@@ -61,18 +72,20 @@ export default function RecordCard({
       <View
         style={[
           styles.row2,
-          { alignItems: "center", paddingVertical: lib.size.hgap(1) },
+          { alignItems: "center", paddingVertical: lib.size.hgap(0) },
         ]}
       >
         {isWide == false && <View style={styles.col1}></View>}
         <View style={[styles.col2, lib.style.flat()]}>
           <View style={styles.stat}>
             {lib.icon.heart(STAT_ICON_SIZE)}
-            <Text>{data.stat.like}</Text>
+            <Typography type={TypographyType.HINT}>{data.stat.like}</Typography>
           </View>
           <View style={styles.stat}>
             {lib.icon.comment(STAT_ICON_SIZE)}
-            <Text>{data.stat.reply}</Text>
+            <Typography type={TypographyType.HINT}>
+              {data.stat.reply}
+            </Typography>
           </View>
           <View>{lib.icon.chat(STAT_ICON_SIZE)}</View>
           <View>{lib.icon.credit(STAT_ICON_SIZE)}</View>
@@ -85,25 +98,29 @@ export default function RecordCard({
 const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: lib.size.hgap(0),
-    paddingBottom: lib.size.vgap(0),
+    paddingVertical: lib.size.vgap(0),
+    borderWidth: 1,
+    borderColor: lib.palette.MIST,
+    backgroundColor: lib.palette.WHITE,
     gap: 8,
+    borderRadius: lib.size.round(0),
   },
   row1: {
     ...lib.style.flat(),
     height: lib.size.rowh(1),
     alignItems: "center",
-    gap: 8, //lib.size.hgap(0)
+    gap: 8,
   },
   row2: {
     ...lib.style.flat(),
-    gap: 8, //lib.size.hgap(0)
+    gap: 8,
   },
   col1: {
     width: lib.size.colw(1),
     ...lib.style.center(),
   },
   col2: {
-    rowGap: lib.size.vgap(0),
+    rowGap: 8,
     columnGap: lib.size.hgap(1),
     flex: 1,
   },

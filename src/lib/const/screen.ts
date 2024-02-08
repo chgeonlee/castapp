@@ -4,4 +4,5 @@ export default class Screen {
   readonly MARK = "Near";
   readonly USER = "User";
   readonly FIND = "Find";
+  readonly ADD = "Add";
 }

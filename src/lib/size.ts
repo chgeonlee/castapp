@@ -38,9 +38,12 @@ export default class Size {
   vgap(scale: number = 0) {
     switch (scale) {
       case 0:
+        return 8;
       case 1:
       case 2:
+      case 3:
         return UNIT * (scale + 4);
+
       default:
         return UNIT;
     }
@@ -61,12 +64,13 @@ export default class Size {
 
   //border-radius
   round(scale: number = 0) {
-    const unit = 4;
     switch (scale) {
       case 0:
       case 1:
       case 2:
-        return UNIT * (scale + 1);
+      case 3:
+      case 4:
+        return UNIT * (scale + 2);
       default:
         return UNIT;
     }

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import lib from "../../lib";
+import Typography from "../typography";
 
 interface TextLabelProps {
   name: string;
@@ -9,9 +10,9 @@ interface TextLabelProps {
 export const TextLabel = ({ name, inverted = false }: TextLabelProps) => {
   return (
     <View style={[styles.wrap, inverted ? styles.invert : null]}>
-      <Text style={inverted ? styles.invertFontColor : styles.fontColor}>
+      <Typography invert={inverted} highlight>
         {name}
-      </Text>
+      </Typography>
     </View>
   );
 };

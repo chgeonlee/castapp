@@ -13,6 +13,19 @@ import palette from "../palette";
 const ICON_DEFAULT_SIZE = 24;
 
 export default class Icon {
+  //format-list-bulleted
+  list = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <MaterialIcon name="format-list-bulleted" size={s} color={c} />;
+  };
+
+  refresh = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <MaterialCommunityIcon name="refresh" size={s} color={c} />;
+  };
+
+  map = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <MaterialCommunityIcon name="map-outline" size={s} color={c} />;
+  };
+
   home = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
     return <AntIcon name="home" size={s} color={c} />;
   };
@@ -30,7 +43,7 @@ export default class Icon {
   };
 
   more = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
-    return <FeatherIcon name="more-vertical" size={s} color={c} />;
+    return <FeatherIcon name="more-horizontal" size={s} color={c} />;
   };
 
   heart = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
