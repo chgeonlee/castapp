@@ -5,4 +5,5 @@ export default class Screen {
   readonly USER = "User";
   readonly FIND = "Find";
   readonly ADD = "Add";
+  readonly CAMERA = "Camera";
 }

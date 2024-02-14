@@ -65,4 +65,20 @@ export default class Icon {
   plus = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
     return <Ionicons name="add-outline" size={s} color={c} />;
   };
+
+  close = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <AntIcon name="close" size={s} color={c} />;
+  };
+
+  camera = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <FeatherIcon name="camera" size={s} color={c} />;
+  };
+
+  link = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <FeatherIcon name="link" size={s} color={c} />;
+  };
+
+  picture = (s: number = ICON_DEFAULT_SIZE, c: string = palette.BLACK) => {
+    return <AntIcon name="picture" size={s} color={c} />;
+  };
 }

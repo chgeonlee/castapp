@@ -28,6 +28,8 @@ export default class Size {
       case 0:
       case 1:
       case 2:
+      case 3:
+      case 4:
         return UNIT * (scale + 2);
       default:
         return UNIT;
@@ -56,7 +58,7 @@ export default class Size {
         return 8;
       case 1:
       case 2:
-        return UNIT * (scale + 3);
+        return UNIT * (scale + 2);
       default:
         return UNIT;
     }

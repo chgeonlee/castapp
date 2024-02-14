@@ -3,7 +3,7 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import { Video, ResizeMode } from "expo-av";
 import { useRef, useState } from "react";
 import lib from "../../lib";
-const MAX_HEIGHT = 312;
+const MAX_HEIGHT = 350;
 
 const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
   const g = lib.size.hgap(0);
@@ -18,7 +18,7 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
         }
       }
       const r = 14 / 9;
-      let w = containerWidth - 2 * g;
+      let w = containerWidth;
       let h = land <= 0 ? w * r : w / r;
 
       if (h > MAX_HEIGHT) {
@@ -41,7 +41,6 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
 
         if (isWide == false) w = r > 1 ? h / r : h * r;
       }
-      const radius = (52 * itemWidth) / itemHeight;
       return {
         itemWidth: w,
         itemHeight: h,
@@ -60,9 +59,8 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
     return (
       <View
         style={{
-          width: item.size.width,
+          width: containerWidth,
           height: itemHeight,
-          justifyContent: "center",
         }}
       >
         <Image
@@ -86,10 +84,12 @@ const RecordCarousel = ({ data, containerWidth = 352, isWide = false }) => {
       itemWidth={itemWidth + gap}
       inactiveSlideScale={1}
       inactiveSlideOpacity={1}
-      containerCustomStyle={{
-        marginLeft: isWide ? 0 : -lib.size.colw(2),
-        paddingLeft: isWide ? 0 : lib.size.colw(2),
-      }}
+      containerCustomStyle={
+        {
+          // marginLeft: isWide ? 0 : -lib.size.colw(2),
+          // paddingLeft: isWide ? 0 : lib.size.colw(2),
+        }
+      }
     />
   );
 };

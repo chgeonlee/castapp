@@ -51,20 +51,20 @@ export default function Typography({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 12,
-    fontWeight: "400",
+    fontSize: 11,
+    fontWeight: "500",
   },
   article: {
     fontSize: 13,
-    lineHeight: 13 * 1.6,
-    fontWeight: "400",
+    lineHeight: 13 * 1.5,
+    letterSpacing: 0.1,
   },
   emphasis: {
     fontSize: 12,
     fontWeight: "600",
   },
   hint: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "300",
   },
   title: {
