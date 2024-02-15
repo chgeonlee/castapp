@@ -19,6 +19,7 @@ import resources from "../resources";
 import { MarkDataProps } from "../resources/mark";
 import Header from "../component/header";
 import MapViewComponent from "../component/map";
+import { useRoute } from "@react-navigation/native";
 
 const FilterView = ({ filter, deco }) => {
   return (
@@ -49,11 +50,18 @@ const FilterView = ({ filter, deco }) => {
 };
 
 export default function HomeScreen() {
+  const route = useRoute<any>();
+  const { mode } = route.params ?? { mode: "list" }; // 기본값 설정
+
   const [viewMode, setViewMode] = useState<ViewModeEnum>(ViewModeEnum.LIST);
   const [filter, setFilter] = useState(null);
   const [data, setData] = useState<MarkDataProps[] | null>(null);
   const [loadingData, setLoadingData] = useState(true);
   const [filterViewStyle, setFilterViewStyle] = useState(styles.filter);
+
+  useEffect(() => {
+    setViewMode(mode);
+  }, [route]);
 
   useEffect(() => {
     const loadData = () => {

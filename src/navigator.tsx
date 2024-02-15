@@ -22,16 +22,29 @@ import CameraScreen from "./screen/camera";
 
 const Stack = createStackNavigator();
 
+const TabItem = ({ name, fnIcon, option = {}, focused = false }) => {
+  const navigation = useNavigation<any>();
+
+  return (
+    <Pressable
+      style={styles.tabItem}
+      onPress={() => {
+        navigation.navigate(name, option);
+      }}
+    >
+      {fnIcon(undefined, focused ? lib.palette.BLACK : lib.palette.SILVER)}
+    </Pressable>
+  );
+};
+
 const TabContainer = () => {
   const navigation = useNavigation<any>();
-  // const [currentScreenName, setCurrentScreenName] = useState(
-  //   lib.const.screen.HOME
-  // );
+  const [curr, setCurr] = useState(lib.const.screen.HOME);
   useEffect(() => {
     const unsubscribe = navigation.addListener("state", (e) => {
       const { state } = e.data;
       if (state) {
-        console.log(state.routes[state.routes.length - 1]);
+        setCurr(state.routes[state.routes.length - 1].name);
       }
     });
 
@@ -47,49 +60,27 @@ const TabContainer = () => {
         zIndex: 1000,
       }}
     >
-      <Pressable
-        style={styles.tabItem}
-        onPress={() => {
-          navigation.navigate(lib.const.screen.HOME);
-        }}
-      >
-        {lib.icon.home(
-          undefined
-          //currentScreenName == lib.const.screen.HOME ? "red" : "blue"
-        )}
-      </Pressable>
-      {/* <Pressable
-        style={styles.tabItem}
-        onPress={() => {
-          navigation.navigate(lib.const.screen.MARK);
-        }}
-      >
-        {lib.icon.mark(undefined)}
-      </Pressable> */}
-      <Pressable
-        style={styles.tabItem}
-        onPress={() => {
-          navigation.navigate(lib.const.screen.ADD);
-        }}
-      >
-        {lib.icon.plus(undefined)}
-      </Pressable>
-      <Pressable
-        style={styles.tabItem}
-        onPress={() => {
-          navigation.navigate(lib.const.screen.FIND);
-        }}
-      >
-        {lib.icon.find(undefined)}
-      </Pressable>
-      <Pressable
-        style={styles.tabItem}
-        onPress={() => {
-          navigation.navigate(lib.const.screen.USER);
-        }}
-      >
-        {lib.icon.user(undefined)}
-      </Pressable>
+      <TabItem
+        name={lib.const.screen.HOME}
+        option={{ mode: "list" }}
+        fnIcon={lib.icon.home}
+        focused={curr == lib.const.screen.HOME}
+      />
+      <TabItem
+        name={lib.const.screen.ADD}
+        fnIcon={lib.icon.plus}
+        focused={curr == lib.const.screen.ADD}
+      />
+      <TabItem
+        name={lib.const.screen.FIND}
+        fnIcon={lib.icon.find}
+        focused={curr == lib.const.screen.FIND}
+      />
+      <TabItem
+        name={lib.const.screen.USER}
+        fnIcon={lib.icon.user}
+        focused={curr == lib.const.screen.USER}
+      />
     </View>
   );
 };

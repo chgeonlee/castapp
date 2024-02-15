@@ -4,7 +4,7 @@ import { MarkDataProps } from "../resources/mark";
 import { Callout, Marker, Circle } from "react-native-maps";
 import React, { useEffect, useRef, useState } from "react";
 import { BlurView } from "expo-blur";
-import RecordCard from "./card/record";
+import RecordCard from "./card/post";
 import lib from "../lib";
 import BottomDrawer, {
   BottomDrawerMethods,
