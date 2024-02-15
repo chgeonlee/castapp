@@ -23,30 +23,28 @@ export default function RecordCard({
         userId={data.user.id}
         tick={lib.time.tickerForm(data.trace.created_at)}
       />
-      <View style={[styles.row2, { paddingHorizontal: 4 }]}>
-        <View
-          style={[styles.col2, { marginHorizontal: 0 }]}
-          onLayout={(e) => {
-            setContentWidth(e.nativeEvent.layout.width);
-          }}
-        >
-          {data.record.text && (
-            <Typography type={TypographyType.ARTICLE}>
-              {data.record.text}
-            </Typography>
+      <View
+        style={styles.content}
+        onLayout={(e) => {
+          setContentWidth(e.nativeEvent.layout.width);
+        }}
+      >
+        {data.record.text && (
+          <Typography type={TypographyType.ARTICLE}>
+            {data.record.text}
+          </Typography>
+        )}
+        {data.record.mediaList &&
+          data.record.mediaList.length > 0 &&
+          contentWidth > 0 && (
+            <RecordCarousel
+              data={data.record.mediaList}
+              isWide={isWide}
+              containerWidth={contentWidth}
+            />
           )}
-          {data.record.mediaList &&
-            data.record.mediaList.length > 0 &&
-            contentWidth > 0 && (
-              <RecordCarousel
-                data={data.record.mediaList}
-                isWide={isWide}
-                containerWidth={contentWidth}
-              />
-            )}
-        </View>
+        <CardStat />
       </View>
-      <CardStat />
     </View>
   );
 }
@@ -55,38 +53,15 @@ const DEFAULT_GAP = 12;
 
 const styles = StyleSheet.create({
   wrap: {
-    paddingHorizontal: lib.size.hgap(1),
-    paddingVertical: lib.size.vgap(1),
-    borderWidth: 1,
+    padding: lib.size.gap(1),
+    paddingBottom: 24,
     borderColor: lib.palette.MIST,
     backgroundColor: lib.palette.WHITE,
-    borderRadius: lib.size.round(0),
     gap: DEFAULT_GAP,
   },
-  row1: {
-    ...lib.style.flat(),
-    height: lib.size.rowh(1),
-    alignItems: "center",
+  content: {
     gap: DEFAULT_GAP,
-  },
-  row2: {
-    ...lib.style.flat(),
-    gap: DEFAULT_GAP,
-    //borderWidth: 0.5,
-  },
-  col1: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  col2: {
-    rowGap: DEFAULT_GAP,
-    columnGap: DEFAULT_GAP,
     flex: 1,
-  },
-
-  stat: {
-    ...lib.style.flat(),
-    alignItems: "center",
-    gap: lib.size.hgap(0),
+    //paddingHorizontal: 0,
   },
 });

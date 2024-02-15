@@ -13,7 +13,7 @@ export default class Style {
   border(d: "" | BorderDirection = "", w = undefined): ViewStyle {
     return {
       ["border" + d + "Width"]: w || 0.5,
-      ["border" + d + "Color"]: palette.GREY,
+      ["border" + d + "Color"]: palette.MIST,
     };
   }
 

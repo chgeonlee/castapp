@@ -1,23 +1,26 @@
-import { Image, ImageProps, StyleSheet, View } from "react-native";
+import { Image, ImageProps, Pressable, StyleSheet, View } from "react-native";
 import lib from "../../lib";
 import Typography, { TypographyType } from "../typography";
 
 export default function CardHeader({ thumbnail, userId, tick = undefined }) {
   return (
     <View style={styles.wrap}>
-      <Image
-        source={{
-          uri: thumbnail,
-        }}
-        style={styles.thumbnail as ImageProps}
-      />
-      <View style={styles.info}>
+      <Pressable style={styles.user}>
+        <Image
+          source={{
+            uri: thumbnail,
+          }}
+          style={styles.thumbnail as ImageProps}
+        />
         <Typography type={TypographyType.EMPHASIS}>{userId}</Typography>
+      </Pressable>
+
+      <View style={styles.info}>
         {tick && (
-          <View style={styles.infoTail}>
+          <>
             <Typography type={TypographyType.HINT}>{tick}</Typography>
             <View>{lib.icon.more(undefined, lib.palette.GREY)}</View>
-          </View>
+          </>
         )}
       </View>
     </View>
@@ -27,13 +30,12 @@ export default function CardHeader({ thumbnail, userId, tick = undefined }) {
 const styles = StyleSheet.create({
   wrap: {
     flexDirection: "row",
-    gap: lib.size.gap(0),
+    justifyContent: "space-between",
   },
+  user: { flexDirection: "row", alignItems: "center", gap: lib.size.gap(0) },
   info: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
   },
 
   infoTail: {
@@ -45,8 +47,9 @@ const styles = StyleSheet.create({
   thumbnail: {
     ...lib.style.border(),
     ...lib.style.fill(),
-    height: 34,
-    width: 34,
+    height: 42,
+    width: 42,
     borderRadius: 100,
+    borderWidth: 2,
   },
 });

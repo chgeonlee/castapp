@@ -1,15 +1,6 @@
-import {
-  Button,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import lib from "../../lib";
 import Typography, { TypographyType } from "../typography";
-import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
 
 export function CardStat() {
   const ICON_SIZE = 16;
@@ -58,18 +49,16 @@ const styles = StyleSheet.create({
   wrap: {},
   statContainer: {
     flexDirection: "row",
-    gap: lib.size.gap(2),
-    //justifyContent: "space-between",
+    gap: lib.size.gap(1),
   },
   mediaContainer: {
     flexDirection: "row",
-    paddingVertical: lib.size.vgap(0),
+    padding: lib.size.gap(0),
+    gap: lib.size.gap(1),
   },
-
   icon: {
     alignItems: "center",
     justifyContent: "center",
-    gap: lib.size.hgap(0),
-    padding: lib.size.gap(2),
+    gap: lib.size.gap(0),
   },
 });

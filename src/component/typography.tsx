@@ -49,9 +49,13 @@ export default function Typography({
   return <Text style={deco}>{children}</Text>;
 }
 
+/**
+ * Apple Design 원칙에 따라 폰트사이즈는 최소 11
+ *
+ */
 const styles = StyleSheet.create({
   default: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "500",
   },
   article: {
@@ -60,11 +64,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.1,
   },
   emphasis: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "600",
   },
   hint: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "300",
   },
   title: {

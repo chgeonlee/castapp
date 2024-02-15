@@ -5,7 +5,6 @@ import Header from "./component/header";
 import lib from "./lib";
 import FindScreen from "./screen/find";
 import HomeScreen from "./screen/home";
-import MarkScreen from "./screen/mark";
 import UserScreen from "./screen/user";
 import {
   Keyboard,
@@ -23,7 +22,7 @@ import CameraScreen from "./screen/camera";
 
 const Stack = createStackNavigator();
 
-const TabContainer2 = () => {
+const TabContainer = () => {
   const navigation = useNavigation<any>();
   // const [currentScreenName, setCurrentScreenName] = useState(
   //   lib.const.screen.HOME
@@ -59,14 +58,14 @@ const TabContainer2 = () => {
           //currentScreenName == lib.const.screen.HOME ? "red" : "blue"
         )}
       </Pressable>
-      <Pressable
+      {/* <Pressable
         style={styles.tabItem}
         onPress={() => {
           navigation.navigate(lib.const.screen.MARK);
         }}
       >
         {lib.icon.mark(undefined)}
-      </Pressable>
+      </Pressable> */}
       <Pressable
         style={styles.tabItem}
         onPress={() => {
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 12,
+    padding: 8,
   },
 });
 
@@ -127,14 +126,14 @@ export default function Navigator() {
               name={lib.const.screen.HOME}
               component={HomeScreen}
               options={{
-                header: () => <Header />,
+                header: () => null,
               }}
             />
             <Stack.Screen
-              name={lib.const.screen.MARK}
-              component={MarkScreen}
+              name={lib.const.screen.FIND}
+              component={FindScreen}
               options={{
-                header: () => null,
+                header: () => <Header />,
               }}
             />
             <Stack.Screen
@@ -152,13 +151,7 @@ export default function Navigator() {
                 };
               }}
             />
-            <Stack.Screen
-              name={lib.const.screen.FIND}
-              component={FindScreen}
-              options={{
-                header: () => <Header />,
-              }}
-            />
+
             <Stack.Screen
               name={lib.const.screen.USER}
               component={UserScreen}
@@ -175,7 +168,7 @@ export default function Navigator() {
             />
           </Stack.Navigator>
         </SafeAreaView>
-        <TabContainer2 />
+        <TabContainer />
       </NavigationContainer>
     </>
   );
