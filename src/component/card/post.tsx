@@ -7,15 +7,15 @@ import Typography, { TypographyType } from "../typography";
 import { CardStat } from "./footer";
 import CardHeader from "./header";
 
-export default function RecordCard({
+export default function PostCard({
   data,
   isWide = false,
 }: {
   data: MarkDataProps;
   isWide?: boolean;
 }) {
-  const STAT_ICON_SIZE = 18;
   const [contentWidth, setContentWidth] = useState<number | null>();
+
   return (
     <View style={styles.wrap}>
       <CardHeader
@@ -62,6 +62,5 @@ const styles = StyleSheet.create({
   content: {
     gap: DEFAULT_GAP,
     flex: 1,
-    //paddingHorizontal: 0,
   },
 });

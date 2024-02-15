@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
-import RecordCard from "../component/card/record";
+import PostCard from "../component/card/post";
 import { TextLabel } from "../component/label";
 import LoadingViewComponent from "../component/loading";
 import lib from "../lib";
@@ -163,7 +163,7 @@ export default function HomeScreen() {
           {data.map((item, idx) => {
             return (
               <View style={styles.card} key={item.dbid}>
-                <RecordCard data={item} />
+                <PostCard data={item} />
               </View>
             );
           })}
